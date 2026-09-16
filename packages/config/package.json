@@ -1,0 +1,29 @@
+{
+  "name": "@modulyn/config",
+  "version": "0.1.0",
+  "description": "Environment configuration utilities for the Modulyn ecosystem",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@modulyn/core": "workspace:*",
+    "dotenv": "^17.4.2"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.4"
+  }
+}

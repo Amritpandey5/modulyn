@@ -1,0 +1,20 @@
+{
+  "name": "modulyn",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A modular toolkit for eliminating repetitive backend code",
+  "license": "MIT",
+  "packageManager": "pnpm@12.4.1",
+  "type": "module",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "test": "turbo run test",
+    "lint": "turbo run lint"
+  },
+  "devDependencies": {
+    "@types/node": "^26.5.1",
+    "turbo": "^2.5.6",
+    "typescript": "^5.9.2"
+  }
+}
