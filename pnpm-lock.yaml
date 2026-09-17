@@ -195,6 +195,12 @@ importers:
         specifier: ^3.2.4
         version: 3.2.7(@types/node@26.5.1)
 
+  packages/logger:
+    devDependencies:
+      vitest:
+        specifier: ^3.2.4
+        version: 3.2.7(@types/node@26.5.1)
+
 packages:
 
   '@esbuild/aix-ppc64@0.28.2':
