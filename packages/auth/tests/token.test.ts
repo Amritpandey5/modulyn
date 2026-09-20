@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
-
-import { generateToken, verifyToken } from '../src/token'
+import jwt from 'jsonwebtoken'
+import { generateToken, JwtOptions, verifyToken } from '../src/token'
 
 
 describe("token", () => {
@@ -12,7 +12,7 @@ describe("token", () => {
     const secret = "amritpandey2314@ass";
 
     it("should generate a valid token ", () => {
-        const options = { expiresIn: 7 };
+        const options: JwtOptions = { expiresIn: "1h" };
 
         const token = generateToken(payload, secret, options);
 
@@ -22,7 +22,7 @@ describe("token", () => {
 
     it("should verify a valid token", () => {
 
-        const options = { expiresIn: 7 };
+        const options: JwtOptions = { expiresIn: "1h" };
 
         const token = generateToken(payload, secret, options);
         const res = verifyToken(token, secret);
@@ -34,10 +34,10 @@ describe("token", () => {
     });
 
     it("should reject a token with the wrong secret", () => {
-        const options = { expiresIn: 7 };
+        const options: JwtOptions = { expiresIn: "1h" };
 
         const token = generateToken(payload, secret, options);
-        const wrongSecret = "wrong-secret"; 
+        const wrongSecret = "wrong-secret";
 
         expect(() => {
             verifyToken(token, wrongSecret);
@@ -45,7 +45,7 @@ describe("token", () => {
     });
 
     it("should reject a tampered token", () => {
-        const options = { expiresIn: 7 };
+        const options: JwtOptions = { expiresIn: "1h" };
 
         const token = generateToken(payload, secret, options);
 
@@ -74,4 +74,26 @@ describe("token", () => {
             verifyToken(expiredToken, secret);
         }).toThrow();
     });
+
+    it("should use HS256 by default", () => {
+
+        const token = generateToken(payload, secret);
+
+        const parts = token.split(".");
+        const header = JSON.parse(
+            Buffer.from(parts[0], "base64url").toString("utf-8")
+        );
+
+        expect(header.alg).toBe("HS256");
+    });
+
+    it("should reject a token signed with an unsupported algorithm", () => {
+        const token = jwt.sign(payload, secret, {
+            algorithm: "HS384"
+        });
+
+        expect(() => {
+            verifyToken(token, secret)
+        }).toThrow();
+    })
 })
